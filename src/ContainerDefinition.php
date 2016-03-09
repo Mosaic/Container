@@ -2,10 +2,12 @@
 
 namespace Mosaic\Container;
 
-interface ContainerDefinition
+use Interop\Container\Definition\DefinitionInterface;
+
+interface ContainerDefinition extends DefinitionInterface
 {
     /**
      * @return Container
      */
-    public function getDefinition() : Container;
+    public function getContainerImplementation() : Container;
 }

@@ -12,7 +12,7 @@ class LaravelContainerDefinition implements ContainerDefinition
     /**
      * @return ContainerContract
      */
-    public function getDefinition() : ContainerContract
+    public function getContainerImplementation() : ContainerContract
     {
         return new Adapter(new Container);
     }
