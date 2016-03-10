@@ -65,12 +65,32 @@ class LaravelContainerTest extends \PHPUnit_Framework_TestCase
         $this->container->bind($abstract, $concrete);
     }
 
+    public function test_can_register_closure_binding()
+    {
+        $abstract = 'abstract';
+        $concrete = function () {};
+
+        $this->wrappedMock->shouldReceive('bind')->once()->andReturn('resolved');
+
+        $this->container->bind($abstract, $concrete);
+    }
+
     public function test_can_register_a_singleton_in_the_container()
     {
         $abstract = 'abstract';
         $concrete = 'concrete';
 
         $this->wrappedMock->shouldReceive('singleton')->with($abstract, $concrete)->once()->andReturn('resolved');
+
+        $this->container->singleton($abstract, $concrete);
+    }
+
+    public function test_can_register_a_singleton_closure()
+    {
+        $abstract = 'abstract';
+        $concrete = function () {};
+
+        $this->wrappedMock->shouldReceive('singleton')->once()->andReturn('resolved');
 
         $this->container->singleton($abstract, $concrete);
     }
