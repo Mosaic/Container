@@ -2,8 +2,6 @@
 
 namespace Mosaic\Container;
 
-use Interop\Container\Exception\NotFoundException;
-
 interface Container
 {
     /**
