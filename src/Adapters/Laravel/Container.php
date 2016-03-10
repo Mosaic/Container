@@ -58,6 +58,12 @@ class Container implements AutomaticResolutionContainer
      */
     public function bind($abstract, $concrete = null)
     {
+        if (is_callable($concrete)) {
+            $this->delegate->bind($abstract, $this->delegateClosureCall($concrete));
+
+            return;
+        }
+
         $this->delegate->bind($abstract, $concrete);
     }
 
@@ -69,6 +75,12 @@ class Container implements AutomaticResolutionContainer
      */
     public function singleton($abstract, $concrete = null)
     {
+        if (is_callable($concrete)) {
+            $this->delegate->singleton($abstract, $this->delegateClosureCall($concrete));
+
+            return;
+        }
+
         $this->delegate->singleton($abstract, $concrete);
     }
 
@@ -122,5 +134,16 @@ class Container implements AutomaticResolutionContainer
         }
 
         return $this->delegate->make($abstract, $parameters);
+    }
+
+    /**
+     * @param  callable $concrete
+     * @return \Closure
+     */
+    private function delegateClosureCall(callable $concrete)
+    {
+        return function ($laravel, $params) use ($concrete) {
+            return $concrete($this, $params);
+        };
     }
 }
